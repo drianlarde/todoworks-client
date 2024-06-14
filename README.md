@@ -1,4 +1,4 @@
-<img width="331" alt="Screenshot 2024-06-14 at 9 55 31 PM" src="https://github.com/drianlarde/todoworks-client/assets/69323240/ffa6f3b4-3407-4c02-a25e-54e462e1db2d"># Todoworks (Client)
+# Todoworks
 
 To get started with the TodoWorks client, follow the steps below.
 
@@ -53,7 +53,5 @@ For backend functionality, you can run the TodoWorks server locally. Please refe
 
 ### Screenshots
 <img width="593" alt="image" src="https://github.com/drianlarde/todoworks-client/assets/69323240/eda86fb8-b329-4d18-84ab-30b65696d10a">
-<img width="593" alt="image" src="https://github.com/drianlarde/todoworks-client/assets/69323240/cd9c9be9-4b63-44c2-ab09-7acab7039be8">
-<img width="313" alt="image" src="https://github.com/drianlarde/todoworks-client/assets/69323240/a795aa86-3afc-4d42-b83f-a8d82fb1fd9d">
 <img width="313" alt="image" src="https://github.com/drianlarde/todoworks-client/assets/69323240/e4aa638e-ed48-412b-9d63-f81e6583e4a2">
 <img width="317" alt="image" src="https://github.com/drianlarde/todoworks-client/assets/69323240/b365e755-91e2-44c4-b37b-186d815cf21c">
