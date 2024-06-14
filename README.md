@@ -55,3 +55,5 @@ For backend functionality, you can run the TodoWorks server locally. Please refe
 <img width="593" alt="image" src="https://github.com/drianlarde/todoworks-client/assets/69323240/eda86fb8-b329-4d18-84ab-30b65696d10a">
 <img width="313" alt="image" src="https://github.com/drianlarde/todoworks-client/assets/69323240/e4aa638e-ed48-412b-9d63-f81e6583e4a2">
 <img width="317" alt="image" src="https://github.com/drianlarde/todoworks-client/assets/69323240/b365e755-91e2-44c4-b37b-186d815cf21c">
+<img width="180" alt="image" src="https://github.com/drianlarde/todoworks-client/assets/69323240/80320929-43eb-4a0d-887c-f6941bf348ba">
+
