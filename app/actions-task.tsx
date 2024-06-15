@@ -18,12 +18,11 @@ import UpdateTask from './update-task';
 
 export default function ActionsTask({
   task,
-  setIsDeleteTaskPending,
-  setIsUpdateTaskPending,
+  setOptimisticTasks,
 }: {
   task: Task;
-  setIsDeleteTaskPending: (isDeleteTaskPending: boolean) => void;
-  setIsUpdateTaskPending: (isUpdateTaskPending: boolean) => void;
+  optimisticTasks: Task[];
+  setOptimisticTasks: React.Dispatch<React.SetStateAction<Task[]>>;
 }) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
@@ -48,10 +47,7 @@ export default function ActionsTask({
             <Edit2 className="w-3" /> Edit
           </DropdownMenuItem>
           <DropdownMenuItem className="cursor-pointer bg-white hover:bg-zinc-100">
-            <DeleteTask
-              setIsDeleteTaskPending={setIsDeleteTaskPending}
-              id={task.id}
-            />
+            <DeleteTask task={task} setOptimisticTasks={setOptimisticTasks} />{' '}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -61,7 +57,7 @@ export default function ActionsTask({
         task={task}
         open={isEditDialogOpen}
         onOpenChange={setIsEditDialogOpen}
-        setIsUpdateTaskPending={setIsUpdateTaskPending}
+        setOptimisticTasks={setOptimisticTasks}
       />
     </>
   );

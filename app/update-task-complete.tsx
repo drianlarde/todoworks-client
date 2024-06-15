@@ -11,9 +11,11 @@ import { toast } from 'sonner';
 export default function UpdateTaskComplete({
   id,
   task,
+  setOptimisticTasks,
 }: {
   id: string;
   task: Task;
+  setOptimisticTasks: React.Dispatch<React.SetStateAction<Task[]>>;
 }) {
   const [updatedTask, setUpdatedTask] = useState<Task>(task);
 
@@ -21,7 +23,7 @@ export default function UpdateTaskComplete({
     mutationFn: updateTask,
     onSuccess: () => {
       toast.success(
-        `Task ${task.completed ? 'marked as incomplete' : 'completed'}`,
+        `Task ${updatedTask.completed ? 'marked as incomplete' : 'completed'}`,
         {
           duration: 2000,
           position: 'top-center',
@@ -34,24 +36,31 @@ export default function UpdateTaskComplete({
     setUpdatedTask(task);
   }, [task]);
 
+  const handleCheckboxChange = () => {
+    const newCompletedState = !updatedTask.completed;
+
+    // Optimistically update the task state locally
+    setOptimisticTasks((prevTasks) =>
+      prevTasks.map((t) =>
+        t.id === id ? { ...t, completed: newCompletedState } : t,
+      ),
+    );
+
+    // Send the update request to the server
+    server_updateTaskDone({
+      id,
+      task: {
+        ...updatedTask,
+        completed: newCompletedState,
+      },
+    });
+  };
+
   return (
     <Checkbox
-      className="w-4 h-4 border border-zinc-300 rounded cursor-pointer mt-[0.36rem]"
-      defaultChecked={task.completed}
-      onCheckedChange={() => {
-        setUpdatedTask({
-          ...updatedTask,
-          completed: !task.completed,
-        });
-
-        server_updateTaskDone({
-          id,
-          task: {
-            ...updatedTask,
-            completed: !task.completed,
-          },
-        });
-      }}
+      className="w-4 h-4 border border-zinc-300 rounded cursor-pointer"
+      checked={updatedTask.completed}
+      onCheckedChange={handleCheckboxChange}
     />
   );
 }

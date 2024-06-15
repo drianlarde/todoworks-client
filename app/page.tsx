@@ -16,9 +16,7 @@ async function fetchTasks(): Promise<Task[]> {
 }
 
 export default async function Home() {
-  const tasks: Task[] = await fetchTasks(); // Change the type to Task[] and add await
-
-  console.log('Tasks', tasks);
+  const tasks: Task[] = await fetchTasks();
 
   return (
     <div className="relative h-screen">

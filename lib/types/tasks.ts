@@ -3,4 +3,5 @@ export type Task = {
   task: string;
   description: string;
   completed: boolean;
+  isPending?: boolean;
 };

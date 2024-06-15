@@ -24,24 +24,42 @@ export default function UpdateTask({
   task,
   open,
   onOpenChange,
-  setIsUpdateTaskPending,
+  setOptimisticTasks,
 }: {
   id: string;
   task: Task;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  setIsUpdateTaskPending: (isUpdateTaskPending: boolean) => void;
+  setOptimisticTasks: React.Dispatch<React.SetStateAction<Task[]>>;
 }) {
   const [updatedTask, setUpdatedTask] = useState<Task>(task);
 
-  const { mutate: server_updateTask, isPending } = useMutation({
+  const { mutate: server_updateTask } = useMutation({
     mutationFn: updateTask,
-    onSuccess: () => {
+    onSuccess: (data) => {
       toast.success('Task updated successfully', {
         duration: 2000,
         position: 'top-center',
       });
-      setIsUpdateTaskPending(false);
+
+      // Update the optimistic task with the received data
+      setOptimisticTasks((prevTasks) =>
+        prevTasks.map((task) =>
+          task.id === id ? { ...task, ...data, isPending: false } : task,
+        ),
+      );
+    },
+    onError: () => {
+      // Revert the optimistic update if the request fails
+      setOptimisticTasks((prevTasks) =>
+        prevTasks.map((task) =>
+          task.id === id ? { ...task, isPending: false } : task,
+        ),
+      );
+      toast.error('Failed to update task', {
+        duration: 2000,
+        position: 'top-center',
+      });
     },
   });
 
@@ -49,9 +67,20 @@ export default function UpdateTask({
     setUpdatedTask(task);
   }, [task]);
 
-  if (isPending) {
-    setIsUpdateTaskPending(true);
-  }
+  const handleUpdateTask = () => {
+    // Optimistically update the task in the list
+    setOptimisticTasks((prevTasks) =>
+      prevTasks.map((t) =>
+        t.id === id ? { ...updatedTask, isPending: true } : t,
+      ),
+    );
+
+    // Send the update request to the server
+    server_updateTask({ id, task: updatedTask });
+
+    // Close the dialog
+    onOpenChange(false);
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -98,10 +127,7 @@ export default function UpdateTask({
           <Button
             className="mb-2 md:mb-0"
             variant="outline"
-            onClick={() => {
-              onOpenChange(false);
-              server_updateTask({ id, task: updatedTask });
-            }}
+            onClick={handleUpdateTask}
           >
             Update Task
           </Button>
